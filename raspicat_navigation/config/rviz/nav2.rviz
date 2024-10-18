@@ -5,18 +5,21 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /Raspicat1
+        - /Raspicat1/LaserScan1
         - /Amcl1
+        - /Amcl1/Map1
         - /Global Planner1
         - /Controller1
         - /Waypoint Follower1
+        - /PointStamped1
       Splitter Ratio: 0.5833333134651184
-    Tree Height: 470
+    Tree Height: 532
   - Class: rviz_common/Selection
     Name: Selection
   - Class: rviz_common/Tool Properties
     Expanded:
       - /Publish Point1
+      - /2D Goal Pose1
     Name: Tool Properties
     Splitter Ratio: 0.5886790156364441
   - Class: rviz_common/Views
@@ -71,7 +74,7 @@ Visualization Manager:
           Position Transformer: XYZ
           Selectable: true
           Size (Pixels): 3
-          Size (m): 0.07999999821186066
+          Size (m): 0.15000000596046448
           Style: Flat Squares
           Topic:
             Depth: 5
@@ -132,13 +135,13 @@ Visualization Manager:
               Value: true
             caster_wheel_link:
               Value: true
+            gnss_link:
+              Value: true
             imu_link:
               Value: true
             left_front_usensor_link:
               Value: true
             left_side_usensor_link:
-              Value: true
-            left_wheel_link:
               Value: true
             lidar_link:
               Value: true
@@ -151,8 +154,6 @@ Visualization Manager:
             right_front_usensor_link:
               Value: true
             right_side_usensor_link:
-              Value: true
-            right_wheel_link:
               Value: true
           Marker Scale: 1
           Name: TF
@@ -174,13 +175,13 @@ Visualization Manager:
                     caster_link:
                       caster_wheel_link:
                         {}
+                    gnss_link:
+                      {}
                     imu_link:
                       {}
                     left_front_usensor_link:
                       {}
                     left_side_usensor_link:
-                      {}
-                    left_wheel_link:
                       {}
                     lidar_mount_link:
                       lidar_link:
@@ -188,8 +189,6 @@ Visualization Manager:
                     right_front_usensor_link:
                       {}
                     right_side_usensor_link:
-                      {}
-                    right_wheel_link:
                       {}
           Update Interval: 0
           Value: true
@@ -209,13 +208,13 @@ Visualization Manager:
             Filter size: 10
             History Policy: Keep Last
             Reliability Policy: Reliable
-            Value: /map
+            Value: /map/localization
           Update Topic:
             Depth: 5
             Durability Policy: Volatile
             History Policy: Keep Last
             Reliability Policy: Reliable
-            Value: /map_updates
+            Value: /map/localization_updates
           Use Timestamp: false
           Value: true
         - Alpha: 1
@@ -412,7 +411,7 @@ Visualization Manager:
           Enabled: true
           Name: Trajectories
           Namespaces:
-            ValidTrajectories: true
+            {}
           Topic:
             Depth: 5
             Durability Policy: Volatile
@@ -506,6 +505,56 @@ Visualization Manager:
         Reliability Policy: Reliable
         Value: /particlecloud
       Value: true
+    - Alpha: 1
+      Axes Length: 1
+      Axes Radius: 0.10000000149011612
+      Class: rviz_default_plugins/PoseWithCovariance
+      Color: 255; 25; 0
+      Covariance:
+        Orientation:
+          Alpha: 0.5
+          Color: 255; 255; 127
+          Color Style: Unique
+          Frame: Local
+          Offset: 1
+          Scale: 1
+          Value: true
+        Position:
+          Alpha: 0.30000001192092896
+          Color: 204; 51; 204
+          Scale: 1
+          Value: true
+        Value: true
+      Enabled: true
+      Head Length: 0.30000001192092896
+      Head Radius: 0.10000000149011612
+      Name: PoseWithCovariance
+      Shaft Length: 1
+      Shaft Radius: 0.05000000074505806
+      Shape: Arrow
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /gnss_pose_with_covariance
+      Value: true
+    - Alpha: 1
+      Class: rviz_default_plugins/PointStamped
+      Color: 204; 41; 204
+      Enabled: true
+      History Length: 1
+      Name: PointStamped
+      Radius: 1
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /last_reset_gnss_pos
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -536,14 +585,20 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /clicked_point
-    - Class: nav2_rviz_plugins/GoalTool
+    - Class: rviz_default_plugins/SetGoal
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: goal_pose
   Transformation:
     Current:
       Class: rviz_default_plugins/TF
   Value: true
   Views:
     Current:
-      Angle: -1.570000171661377
+      Angle: -1.5650001764297485
       Class: rviz_default_plugins/TopDownOrtho
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
@@ -553,27 +608,27 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 26.672836303710938
+      Scale: 3.9978744983673096
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz_default_plugins)
-      X: 27.23505210876465
-      Y: 9.87883472442627
+      X: 178.346435546875
+      Y: 82.65846252441406
     Saved: ~
 Window Geometry:
   Displays:
-    collapsed: false
-  Height: 1001
-  Hide Left Dock: false
-  Hide Right Dock: true
+    collapsed: true
+  Height: 1016
+  Hide Left Dock: true
+  Hide Right Dock: false
   Navigation 2:
-    collapsed: false
-  QMainWindow State: 000000ff00000000fd00000004000000000000016a00000393fc020000000afb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000003b00000211000000c700fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb00000018004e0061007600690067006100740069006f006e0020003201000002520000017c0000011200fffffffb0000001e005200650061006c00730065006e0073006500430061006d0065007200610100000337000000950000000000000000000000010000010f0000034afc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000003d0000034a000000a000fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004420000003efc0100000002fb0000000800540069006d00650100000000000004420000000000000000fb0000000800540069006d00650100000000000004500000000000000000000002500000039300000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+    collapsed: true
+  QMainWindow State: 000000ff00000000fd00000004000000000000016a0000039cfc020000000afb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073000000003e00000252000000ca00fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb00000018004e0061007600690067006100740069006f006e002000320000000296000001440000014400fffffffb0000001e005200650061006c00730065006e0073006500430061006d0065007200610100000337000000950000000000000000000000010000010f0000051ffc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000003e0000051f000000a600fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004420000003efc0100000002fb0000000800540069006d00650100000000000004420000000000000000fb0000000800540069006d00650100000000000004500000000000000000000003a00000039c00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Tool Properties:
     collapsed: false
   Views:
-    collapsed: true
-  Width: 960
+    collapsed: false
+  Width: 928
   X: 70
   Y: 27
