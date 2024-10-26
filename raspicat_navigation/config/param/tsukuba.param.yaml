@@ -1,6 +1,53 @@
+gauss_kruger_node:
+  ros__parameters:
+    p0: [-34.13038635253906, -87.87834167480469, 0.0]
+    gnss0: [36.0831593, 140.07763599999998, 59.703]
+    p1: [-27.807083129882812, -76.69884490966797]
+    gnss1: [36.0831444, 140.0774907]
+      
+      #  p0: [-21.864503860473633, 2.9530677795410156, 0.0]
+      #  gnss0: [36.0828664, 140.0771785, 59.703]
+      #  p1: [-38.342871687651474, -31.0594959818062]
+      #  gnss1: [36.0831514, 140.0774639]
+
+    a: 6378137.0
+    F: 298.257222
+    m0: 0.9999
+    ignore_th_cov: 100.0
+    # range_limit: [0., 0., 272.9515075683594, 172.54762268066406]
+
+      # wall_tracking_node: 
+      #   ros__parameters:
+      #     distance_from_wall: 0.8
+      #     distance_to_stop: 0.8
+      #     max_linear_vel: 0.5
+      #     max_angular_vel: 0.7
+      #     min_angular_vel: -0.7
+      #     sampling_rate: 0.033
+      #     kp: 12.0
+      #     ki: 0.0
+      #     kd: 0.0
+      #     start_deg_lateral: 69
+      #     end_deg_lateral: 78
+      #     stop_ray_th: 0.1
+      #     wheel_separation: 0.28
+      #     distance_to_skip: 0.6
+      #     open_place_distance: 12.5
+      #     # detection_div_deg: [-12., 12., 
+      #     #                     12., 36., 
+      #     #                     -36., -12.,
+      #     #                     36., 60.,  
+      #     #                     -36., -60.]
+      #     detection_div_deg: [-9., 9., 
+      #                         9., 27., 
+      #                         -27., -9., 
+      #                         27., 45., 
+      #                         -45., -27.]
+      #     select_angvel: [0., 0.2, -0.2, 0.35, -0.35]
+    
 emcl2:
   ros__parameters:
-    odom_freq: 15
+    odom_freq: 20
     global_frame_id: "map"
     odom_frame_id: "odom"
     base_frame_id: "base_link"
@@ -8,11 +55,14 @@ emcl2:
     laser_min_range: 0.0
     laser_max_range: 100000000.0
     scan_increment: 1
-    initial_pose_x: 21.084634674915602
-    initial_pose_y: 8.44807701406285 
-    initial_pose_a: 0.0
+    # initial_pose_x: 138.1823272705078
+    # initial_pose_y: 87.90802764892578
+    # initial_pose_a: -1.57
+    initial_pose_x: 0.
+    initial_pose_y: 0.
+    initial_pose_a: 0.
     num_particles: 500
-    alpha_threshold: 0.1
+    alpha_threshold: 0.4
     expansion_radius_position: 1.0
     expansion_radius_orientation: 0.2
     extraction_rate: 0.1
@@ -22,8 +72,8 @@ emcl2:
     odom_fw_dev_per_rot: 0.2
     odom_rot_dev_per_fw: 0.13
     odom_rot_dev_per_rot: 0.05
-    laser_likelihood_max_dist: 0.1
-    use_gnss_reset: false
+    laser_likelihood_max_dist: 1.0
+    use_gnss_reset: true
     use_wall_tracking: false
     gnss_reset_var: 9.0
     kld_th: 5.0
@@ -98,19 +148,19 @@ controller_server:
     general_goal_checker:
       stateful: True
       plugin: "nav2_controller::SimpleGoalChecker"
-      xy_goal_tolerance: 0.25
-      yaw_goal_tolerance: 0.25
+      xy_goal_tolerance: 0.5
+      yaw_goal_tolerance: 0.5
 
     FollowPath:
       plugin: "dwb_core::DWBLocalPlanner"
       debug_trajectory_details: True
       min_vel_x: 0.0
       min_vel_y: 0.0
-      max_vel_x: 0.6
+      max_vel_x: 0.5
       max_vel_y: 0.0
-      max_vel_theta: 1.0
+      max_vel_theta: 0.5
       min_speed_xy: 0.0
-      max_speed_xy: 0.6
+      max_speed_xy: 0.4
       min_speed_theta: 0.0
       acc_lim_x: 2.5
       acc_lim_y: 0.0
@@ -157,7 +207,7 @@ local_costmap:
       width: 3
       height: 3
       resolution: 0.05
-      robot_radius: 0.6
+      robot_radius: 0.5
       plugins: ["obstacle_layer", "voxel_layer", "inflation_layer"]
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
@@ -211,7 +261,7 @@ global_costmap:
       global_frame: map
       robot_base_frame: base_link
       use_sim_time: False
-      robot_radius: 0.6
+      robot_radius: 0.5
       resolution: 0.05
       track_unknown_space: true
       plugins: ["static_layer", "obstacle_layer", "voxel_layer", "inflation_layer"]

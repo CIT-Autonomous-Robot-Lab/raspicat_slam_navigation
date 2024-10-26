@@ -60,21 +60,23 @@ def generate_launch_description():
         'use_rviz',
         default_value='true',
         description='Set "true" to launch rviz.')
+    
+    # map_dir = os.path.join('/home', 'ubuntu', 'tsukuba2024_maps')
+    map_dir = os.path.join('/home', 'ubuntu', 'tsukuba_map_2024')
     declare_loc_map_yaml = DeclareLaunchArgument(
-        'loc_map', default_value=os.path.join(
-            get_package_share_directory('raspicat_navigation'),
-                'config', 'map', 'tsudanuma_2_19', 'localization', 'map_tsudanuma_2_19.yaml'),
-                description='Full path to map yaml file for localization to load')
+        # 'loc_map', default_value=os.path.join(map_dir, 'localization', 'tsukuba_loc_1006_ver1.yaml'),
+        'loc_map', default_value=os.path.join(map_dir, 'localization', 'tama_tsukuba_localization.yaml'),
+        description='Full path to map yaml file for localization to load')
+    
     declare_nav_map_yaml = DeclareLaunchArgument(
-        'nav_map', default_value=os.path.join(
-            get_package_share_directory('raspicat_navigation'),
-                'config', 'map', 'tsudanuma_2_19', 'navigation', 'map_tsudanuma_2_19.yaml'),
+        # 'nav_map', default_value=os.path.join(map_dir, 'navigation', 'tsukuba_nav_1006_ver1.yaml'),
+        'nav_map', default_value=os.path.join(map_dir, 'navigation', 'tama_tsukuba_navigation.yaml'),
                 description='Full path to map yaml file for navigation to load')
     declare_params_file = DeclareLaunchArgument(
         'params_file',
         default_value=os.path.join(
             get_package_share_directory('raspicat_navigation'),
-                'config', 'param', 'exp_219.param.yaml'),
+                'config', 'param', 'tsukuba.param.yaml'),
                 description='Full path to the ROS2 parameters file to use for all launched nodes')
     declare_container_name = DeclareLaunchArgument(
         'container_name', default_value='nav2_container',
@@ -117,6 +119,24 @@ def generate_launch_description():
         condition=IfCondition(PythonExpression(['not ', use_composition])),
         actions=[
             Node(
+                package="gnss2map", 
+                name="gauss_kruger_node", 
+                executable="gauss_kruger_node", 
+                output='screen',
+                respawn=use_respawn,
+                respawn_delay=2.0,
+                parameters=[configured_params],
+                arguments=['--ros-args', '--log-level', log_level]),
+            # Node(
+            #     package="wall_tracking_executor", 
+            #     executable="wall_tracking_node", 
+            #     name="wall_tracking_node", 
+            #     output='screen',
+            #     respawn=use_respawn,
+            #     respawn_delay=2.0,
+            #     parameters=[configured_params],
+            #     arguments=['--ros-args', '--log-level', log_level]),
+            Node(
                 package='nav2_map_server',
                 executable='map_server',
                 name='loc_map_server',
@@ -144,7 +164,7 @@ def generate_launch_description():
                 respawn=use_respawn,
                 respawn_delay=2.0,
                 parameters=[configured_params],
-                arguments=['--ros-args', '--log-level', log_level],
+                # arguments=['--ros-args', '--log-level', log_level],
                 remappings=remappings+[('map', '/map/localization')]),
             Node(
                 package='nav2_lifecycle_manager',
@@ -203,7 +223,7 @@ def generate_launch_description():
                 respawn_delay=2.0,
                 parameters=[configured_params],
                 arguments=['--ros-args', '--log-level', log_level],
-                remappings=remappings),
+                remappings=remappings+[('/goal_pose', 'goal_pose/fake')]),
             Node(
                 package='nav2_waypoint_follower',
                 executable='waypoint_follower',
@@ -318,8 +338,9 @@ def generate_launch_description():
     rviz2 = Node(package='rviz2',
         executable='rviz2',
         name='rviz2',
-        output='log',
+        output='screen',
         arguments=['-d', rviz_config_file],
+        ros_arguments=['--log-level', 'WARN'],
         condition=IfCondition(use_rviz))
 
     ld = LaunchDescription()
@@ -342,4 +363,4 @@ def generate_launch_description():
     ld.add_action(rviz2)
     
     return ld
- 
+  
