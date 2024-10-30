@@ -61,16 +61,16 @@ def generate_launch_description():
         default_value='true',
         description='Set "true" to launch rviz.')
     
-    # map_dir = os.path.join('/home', 'ubuntu', 'tsukuba2024_maps')
-    map_dir = os.path.join('/home', 'ubuntu', 'tsukuba_map_2024')
+    # map_dir = os.path.join('/home', 'ubuntu', 'tsukuba_p2l')
+    map_dir = os.path.join(get_package_share_directory('raspicat_navigation'), 'config', 'map', 'tsukuba')
     declare_loc_map_yaml = DeclareLaunchArgument(
-        # 'loc_map', default_value=os.path.join(map_dir, 'localization', 'tsukuba_loc_1006_ver1.yaml'),
-        'loc_map', default_value=os.path.join(map_dir, 'localization', 'tama_tsukuba_localization.yaml'),
+        'loc_map', default_value=os.path.join(map_dir, 'localization', 
+        'map_tsukuba_loc_2410271328.yaml'),
         description='Full path to map yaml file for localization to load')
     
     declare_nav_map_yaml = DeclareLaunchArgument(
-        # 'nav_map', default_value=os.path.join(map_dir, 'navigation', 'tsukuba_nav_1006_ver1.yaml'),
-        'nav_map', default_value=os.path.join(map_dir, 'navigation', 'tama_tsukuba_navigation.yaml'),
+        'nav_map', default_value=os.path.join(map_dir, 'navigation', 
+        'map_tsukuba_nav_2410271328.yaml'),
                 description='Full path to map yaml file for navigation to load')
     declare_params_file = DeclareLaunchArgument(
         'params_file',
