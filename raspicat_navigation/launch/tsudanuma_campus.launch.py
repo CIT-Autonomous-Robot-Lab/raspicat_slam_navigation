@@ -6,7 +6,6 @@ from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription                                                  
 
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import TextSubstitution
 
 def generate_launch_description():
     pkg_dir = get_package_share_directory('raspicat_navigation') 
@@ -24,20 +23,22 @@ def generate_launch_description():
     nav_map_path = os.path.join(
             map_dir, 'navigation', 'map_tsudanuma_campus.yaml')
 
+    use_sim_time = 'False'
+    use_rviz = 'true'
+    use_wall_tracking = 'false'
+    use_gnss = 'true'
+
     launch = IncludeLaunchDescription(
-            PythonLaunchDescriptionSource([
-                TextSubstitution(text=template_launch_path)]), 
+            PythonLaunchDescriptionSource(template_launch_path), 
             launch_arguments={
-                'namespace': '', 
-                'use_sim_time': 'False', 
-                'autostart': 'True', 
-                'use_rviz': 'true', 
+                'use_sim_time': use_sim_time, 
+                'use_rviz': use_rviz, 
                 'loc_map': loc_map_path, 
                 'nav_map': nav_map_path, 
                 'nav2_params_file': nav2_params_path, 
                 'gnss2map_params_file': gnss2map_params_path, 
-                'use_wall_tracking': 'false', 
-                'use_gnss': 'true'}.items()
+                'use_wall_tracking': use_wall_tracking, 
+                'use_gnss': use_gnss}.items()
             )
     ld = LaunchDescription()
     ld.add_action(launch)
