@@ -1,73 +1,30 @@
-gauss_kruger_node:
-  ros__parameters:
-    # p0: [-34.13038635253906, -87.87834167480469, 0.0]
-    # gnss0: [36.0831593, 140.07763599999998, 59.703]
-    # p1: [-27.807083129882812, -76.69884490966797]
-    # gnss1: [36.0831444, 140.0774907]
-      
-    # p0: [33.9956169128418, -31.668916702270508, 0.0]
-    # gnss0: [36.083095199999995, 140.0774611, 63.953]
-    # p1: [-7.385357856750488, -10.66761589050293]
-    # gnss1: [36.08286, 140.0771728]
-    
-    # p0: [89.095616913, 45.831083298, 0.0]
-    # gnss0: [36.083095199999995, 140.0774611, 63.953]
-    # p1: [47.714642143, 66.832384109]
-    # gnss1: [36.08286, 140.0771728]
-
-      # p0: [90.50281524658203, 47.34498596191406, 0.0]
-      # gnss0: [36.083117,140.0748627, 63.953]
-      # p1: [88.16422271728516, 220.85899353027344]
-      # gnss1: [36.083873,140.0751199]
-
-    # p0: [90.18779754638672, 38.94068908691406, 0.0]
-    # gnss0: [36.0830629, 140.0774954, 63.953]
-    # p1: [90.26242065429688, 40.64994430541992]
-    # gnss1: [36.0830491, 140.0774542]
-    
-    p0: [94.26811218261719, 47.328304290771484, 0.]
-    gnss0: [36.0831515, 140.0774389, 67.566]
-    p1: [46.56578826904297, 66.7236328125]
-    gnss1: [36.0828716, 140.07698969999998]
-    
-    a: 6378137.0
-    F: 298.257222
-    m0: 0.9999
-    ignore_th_cov: 100.0
-    # range_limit: [0., 0., 272.9515075683594, 172.54762268066406]
-
-      # wall_tracking_node: 
-      #   ros__parameters:
-      #     distance_from_wall: 0.8
-      #     distance_to_stop: 0.8
-      #     max_linear_vel: 0.5
-      #     max_angular_vel: 0.7
-      #     min_angular_vel: -0.7
-      #     sampling_rate: 0.033
-      #     kp: 12.0
-      #     ki: 0.0
-      #     kd: 0.0
-      #     start_deg_lateral: 69
-      #     end_deg_lateral: 78
-      #     stop_ray_th: 0.1
-      #     wheel_separation: 0.28
-      #     distance_to_skip: 0.6
-      #     open_place_distance: 12.5
-      #     # detection_div_deg: [-12., 12., 
-      #     #                     12., 36., 
-      #     #                     -36., -12.,
-      #     #                     36., 60.,  
-      #     #                     -36., -60.]
-      #     detection_div_deg: [-9., 9., 
-      #                         9., 27., 
-      #                         -27., -9., 
-      #                         27., 45., 
-      #                         -45., -27.]
-      #     select_angvel: [0., 0.2, -0.2, 0.35, -0.35]
+wall_tracking_node: 
+  ros__parameters: 
+    distance_from_wall: 0.8
+    distance_to_stop: 0.8
+    max_linear_vel: 0.5
+    max_angular_vel: 0.7
+    min_angular_vel: -0.7
+    sampling_rate: 0.033
+    kp: 12.0
+    ki: 0.0
+    kd: 0.0
+    start_deg_lateral: 69
+    end_deg_lateral: 78
+    stop_ray_th: 0.1
+    wheel_separation: 0.28
+    distance_to_skip: 0.6
+    open_place_distance: 12.5
+    detection_div_deg: [-9., 9., 
+                        9., 27., 
+                        -27., -9., 
+                        27., 45., 
+                        -45., -27.]
+    select_angvel: [0., 0.2, -0.2, 0.35, -0.35]
     
 emcl2:
   ros__parameters:
-    odom_freq: 20
+    odom_freq: 30
     global_frame_id: "map"
     odom_frame_id: "odom"
     base_frame_id: "base_link"
@@ -93,7 +50,7 @@ emcl2:
     odom_rot_dev_per_fw: 0.13
     odom_rot_dev_per_rot: 0.05
     laser_likelihood_max_dist: 1.0
-    use_gnss_reset: false
+    use_gnss_reset: true
     use_wall_tracking: false
     gnss_reset_var: 6.0
     kld_th: 5.0
@@ -168,7 +125,7 @@ controller_server:
     general_goal_checker:
       stateful: True
       plugin: "nav2_controller::SimpleGoalChecker"
-      xy_goal_tolerance: 0.5
+      xy_goal_tolerance: 0.75
       yaw_goal_tolerance: 0.5
 
     FollowPath:
@@ -176,12 +133,12 @@ controller_server:
       debug_trajectory_details: True
       min_vel_x: 0.0
       min_vel_y: 0.0
-      max_vel_x: 0.5
+      max_vel_x: 0.75  
       max_vel_y: 0.0
-      max_vel_theta: 0.5
+      max_vel_theta: 1.0
       min_speed_xy: 0.0
-      max_speed_xy: 0.4
-      min_speed_theta: 0.0
+      max_speed_xy: 0.75
+      min_speed_theta: -1.0
       acc_lim_x: 2.5
       acc_lim_y: 0.0
       acc_lim_theta: 3.2
@@ -227,7 +184,7 @@ local_costmap:
       width: 3
       height: 3
       resolution: 0.05
-      robot_radius: 0.5
+      robot_radius: 0.3
       plugins: ["obstacle_layer", "voxel_layer", "inflation_layer"]
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
@@ -281,7 +238,7 @@ global_costmap:
       global_frame: map
       robot_base_frame: base_link
       use_sim_time: False
-      robot_radius: 0.5
+      robot_radius: 0.3
       resolution: 0.05
       track_unknown_space: true
       plugins: ["static_layer", "obstacle_layer", "voxel_layer", "inflation_layer"]
@@ -354,6 +311,7 @@ planner_server:
       plugin: "nav2_navfn_planner/NavfnPlanner"
       tolerance: 0.5
       use_astar: false
+      use_final_approach_orientation: true
       allow_unknown: true
 
 planner_server_rclcpp_node:
@@ -380,6 +338,36 @@ recoveries_server:
     max_rotational_vel: 1.0
     min_rotational_vel: 0.4
     rotational_acc_lim: 3.2
+
+velocity_smoother:
+  ros__parameters:
+    deadband_velocity:
+    - 0.0
+    - 0.0
+    - 0.0
+    feedback: OPEN_LOOP
+    max_accel:
+    - 2.5
+    - 0.0
+    - 3.2
+    max_decel:
+    - -2.5
+    - 0.0
+    - -3.2
+    max_velocity:
+    - 1.6
+    - 0.0
+    - 2.5
+    min_velocity:
+    - -1.6
+    - 0.0
+    - -2.5
+    odom_duration: 0.1
+    odom_topic: odom
+    scale_velocities: false
+    smoothing_frequency: 20.0
+    use_sim_time: false
+    velocity_timeout: 1.0
 
 waypoint_follower:
   ros__parameters:
