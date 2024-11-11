@@ -35,22 +35,30 @@ emcl2:
     # initial_pose_x: 138.1823272705078
     # initial_pose_y: 87.90802764892578
     # initial_pose_a: -1.57
-    initial_pose_x: 0.
-    initial_pose_y: 0.
-    initial_pose_a: 0.
+    # initial_pose_x: 0.
+    # initial_pose_y: 0.
+    # initial_pose_a: 0.
+    # left
+    # initial_pose_x: 45.69450378417969
+    # initial_pose_y: 68.0462646484375
+    # initial_pose_a: 2.0
+    # left
+    initial_pose_x: 49.94795608520508
+    initial_pose_y: 69.70091247558594
+    initial_pose_a: 2.0
     num_particles: 1000
     alpha_threshold: 0.3
     expansion_radius_position: 1.0
     expansion_radius_orientation: 0.2
     extraction_rate: 0.1
-    range_threshold: 0.3
+    range_threshold: 0.65 #0.3
     sensor_reset: false
     odom_fw_dev_per_fw: 0.7
     odom_fw_dev_per_rot: 0.2
     odom_rot_dev_per_fw: 0.13
     odom_rot_dev_per_rot: 0.05
     laser_likelihood_max_dist: 1.0
-    use_gnss_reset: true
+    use_gnss_reset: false
     use_wall_tracking: false
     gnss_reset_var: 6.0
     kld_th: 5.0
@@ -63,8 +71,8 @@ bt_navigator:
     robot_base_frame: base_link
     odom_topic: /odom
     default_bt_xml_filename: "navigate_w_replanning_and_recovery.xml"
-    default_nav_through_poses_bt_xml: ../behavior_trees/navigate_through_poses_w_replanning_and_recovery.xml
-    default_nav_to_pose_bt_xml: ../behavior_trees/navigate_to_pose_w_replanning_and_recovery.xml
+    default_nav_through_poses_bt_xml: "/opt/ros/humble/share/nav2_bt_navigator/behavior_trees/navigate_through_poses_w_replanning_and_recovery.xml"
+    default_nav_to_pose_bt_xml: "/opt/ros/humble/share/nav2_bt_navigator/behavior_trees/navigate_to_pose_w_replanning_and_recovery.xml"
     bt_loop_duration: 10
     default_server_timeout: 500
     enable_groot_monitoring: True
@@ -135,12 +143,12 @@ controller_server:
       debug_trajectory_details: True
       min_vel_x: 0.0
       min_vel_y: 0.0
-      max_vel_x: 0.75  
+      max_vel_x: 1.0
       max_vel_y: 0.0
-      max_vel_theta: 2.0
+      max_vel_theta: 0.5
       min_speed_xy: 0.0
-      max_speed_xy: 0.75
-      min_speed_theta: -2.0
+      max_speed_xy: 1.0
+      min_speed_theta: -0.5
       acc_lim_x: 2.5
       acc_lim_y: 0.0
       acc_lim_theta: 3.2
@@ -184,7 +192,7 @@ local_costmap:
       use_sim_time: False
       rolling_window: true
       width: 3
-      height: 3
+      height: 6
       resolution: 0.05
       robot_radius: 0.35
       plugins: ["obstacle_layer", "voxel_layer", "inflation_layer"]
