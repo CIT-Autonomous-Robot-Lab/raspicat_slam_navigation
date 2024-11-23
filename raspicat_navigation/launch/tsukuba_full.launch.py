@@ -11,16 +11,16 @@ def generate_launch_description():
     template_launch_path = os.path.join(pkg_dir, 'launch', 'template.launch.py')
     config_dir = os.path.join(pkg_dir, 'config')
     param_dir = os.path.join(config_dir, 'param')
-    map_dir = os.path.join(config_dir, 'map', 'tsukuba')
+    map_dir = os.path.join(config_dir, 'map', 'tsukuba_full')
 
     nav2_params_path = os.path.join(
             param_dir, 'nav2.param.yaml')
     gnss2map_params_path = os.path.join(
             param_dir, 'tsukuba_gnss2map.param.yaml')
     loc_map_path = os.path.join(
-            map_dir, 'localization', 'map_tsukuba_loc_2410271328.yaml')
+            map_dir, 'localization', 'map_tsukuba_full_loc.yaml')
     nav_map_path = os.path.join(
-            map_dir, 'navigation', 'map_tsukuba_nav_2410271328.yaml')
+            map_dir, 'navigation', 'map_tsukuba_full_nav.yaml')
 
     use_sim_time = 'False'
     use_rviz = 'true'
