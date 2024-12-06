@@ -57,7 +57,7 @@ emcl2:
     odom_fw_dev_per_rot: 0.2
     odom_rot_dev_per_fw: 0.13
     odom_rot_dev_per_rot: 0.05
-    laser_likelihood_max_dist: 1.0
+    laser_likelihood_max_dist: 0.75
     use_gnss_reset: false
     use_wall_tracking: false
     gnss_reset_var: 0.5
@@ -71,10 +71,10 @@ bt_navigator:
     robot_base_frame: base_link
     odom_topic: /odom
     default_bt_xml_filename: "navigate_w_replanning_and_recovery.xml"
-    default_nav_through_poses_bt_xml: "/opt/ros/humble/share/nav2_bt_navigator/behavior_trees/navigate_through_poses_w_replanning_and_recovery.xml"
-    default_nav_to_pose_bt_xml: "/opt/ros/humble/share/nav2_bt_navigator/behavior_trees/navigate_to_pose_w_replanning_and_recovery.xml"
-    # default_nav_through_poses_bt_xml: "/home/ubuntu/ros2_ws/src/raspicat_slam_navigation/raspicat_navigation/config/behavior_trees/navigate_through_poses_w_replanning_and_recovery.xml" 
-    # default_nav_to_pose_bt_xml: "/home/ubuntu/ros2_ws/src/raspicat_slam_navigation/raspicat_navigation/config/behavior_trees/navigate_to_pose_w_replanning_and_recovery.xml" 
+      #default_nav_through_poses_bt_xml: "/opt/ros/humble/share/nav2_bt_navigator/behavior_trees/navigate_through_poses_w_replanning_and_recovery.xml"
+      #default_nav_to_pose_bt_xml: "/opt/ros/humble/share/nav2_bt_navigator/behavior_trees/navigate_to_pose_w_replanning_and_recovery.xml"
+    default_nav_through_poses_bt_xml: "/home/ubuntu/ros2_ws/src/raspicat_slam_navigation/raspicat_navigation/config/behavior_trees/navigate_through_poses_w_replanning_and_recovery.xml" 
+    default_nav_to_pose_bt_xml: "/home/ubuntu/ros2_ws/src/raspicat_slam_navigation/raspicat_navigation/config/behavior_trees/navigate_to_pose_w_replanning_and_recovery.xml" 
     bt_loop_duration: 10
     default_server_timeout: 500
     enable_groot_monitoring: True
@@ -112,6 +112,7 @@ bt_navigator:
     - nav2_planner_selector_bt_node
     - nav2_controller_selector_bt_node
     - nav2_goal_checker_selector_bt_node
+    - nav2_wait_cancel_bt_node
 
 bt_navigator_rclcpp_node:
   ros__parameters:
