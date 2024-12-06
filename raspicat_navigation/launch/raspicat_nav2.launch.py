@@ -85,16 +85,16 @@ def generate_launch_description():
     param_substitutions = {
         'use_sim_time': use_sim_time,
         'yaml_filename': map_yaml_file}
-    
+
     configured_params = RewrittenYaml(
         source_file=params_file,
         root_key=namespace,
         param_rewrites=param_substitutions,
         convert_types=True)
-    
+
     lifecycle_nodes = [
         'map_server',
-        'amcl',
+        # 'amcl',
         'controller_server',
         'smoother_server',
         'planner_server',
@@ -119,10 +119,20 @@ def generate_launch_description():
                 parameters=[configured_params],
                 arguments=['--ros-args', '--log-level', log_level],
                 remappings=remappings),
+            # Node(
+            #     package='nav2_amcl',
+            #     executable='amcl',
+            #     name='amcl',
+            #     output='screen',
+            #     respawn=use_respawn,
+            #     respawn_delay=2.0,
+            #     parameters=[configured_params],
+            #     arguments=['--ros-args', '--log-level', log_level],
+            #     remappings=remappings),
             Node(
-                package='nav2_amcl',
-                executable='amcl',
-                name='amcl',
+                package='emcl2',
+                executable='emcl2_node',
+                name='emcl2',
                 output='screen',
                 respawn=use_respawn,
                 respawn_delay=2.0,
@@ -230,12 +240,12 @@ def generate_launch_description():
                 name='map_server',
                 parameters=[configured_params],
                 remappings=remappings),
-            ComposableNode(
-                package='nav2_amcl',
-                plugin='nav2_amcl::AmclNode',
-                name='amcl',
-                parameters=[configured_params],
-                remappings=remappings),
+            # ComposableNode(
+            #     package='nav2_amcl',
+            #     plugin='nav2_amcl::AmclNode',
+            #     name='amcl',
+            #     parameters=[configured_params],
+            #     remappings=remappings),
             ComposableNode(
                 package='nav2_lifecycle_manager',
                 plugin='nav2_lifecycle_manager::LifecycleManager',
@@ -296,7 +306,7 @@ def generate_launch_description():
         ],
     )
 
-    rviz_config_file = os.path.join(get_package_share_directory('raspicat_navigation'), 
+    rviz_config_file = os.path.join(get_package_share_directory('raspicat_navigation'),
                                     'config', 'rviz', 'nav2.rviz')
     rviz2 = Node(package='rviz2',
         executable='rviz2',
@@ -320,8 +330,7 @@ def generate_launch_description():
 
     ld.add_action(load_nodes)
     ld.add_action(load_composable_nodes)
-    
+
     ld.add_action(rviz2)
-    
+
     return ld
- 
