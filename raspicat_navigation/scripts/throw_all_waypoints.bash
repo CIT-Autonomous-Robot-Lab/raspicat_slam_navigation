@@ -5,8 +5,20 @@
 
 # 配列に複数のYAMLファイルを追加
 yaml_files=(
-  "$HOME/tsukuba_challenge_2024/scripts/wps/wps.yaml"
-  "$HOME/tsukuba_challenge_2024/scripts/wps/wps_2.yaml"
+  "$HOME/waypoint/wp_1.yaml"
+  "$HOME/waypoint/wp_2.yaml"
+  "$HOME/waypoint/wp_3.yaml"
+  "$HOME/waypoint/wp_4.yaml"
+  "$HOME/waypoint/wp_5.yaml"
+  "$HOME/waypoint/wp_6.yaml"
+  "$HOME/waypoint/wp_7.yaml"
+  "$HOME/waypoint/wp_8.yaml"
+  "$HOME/waypoint/wp_9.yaml"
+  "$HOME/waypoint/wp_10.yaml"
+  "$HOME/waypoint/wp_11.yaml"
+  "$HOME/waypoint/wp_12.yaml"
+  "$HOME/waypoint/wp_13.yaml"
+  "$HOME/waypoint/wp_14.yaml"
 )
 
 # 各YAMLファイルを処理
