@@ -1,4 +1,4 @@
-image: map_tsukuba_full_nav.pgm
+image: map_tsukuba_full_nav_v2.pgm
 mode: trinary
 resolution: 0.1
 origin: [0, 0, 0]
