@@ -23,7 +23,7 @@ def generate_launch_description():
         executable='pointcloud_to_dual_laserscan_node',
         name='pointcloud_to_dual_laserscan_node',
         parameters=[p2l_param_path],
-        remappings=[('scan', 'scan/localization')],
+        #remappings=[('scan', 'scan/localization')],
         output='screen',
     )
 
