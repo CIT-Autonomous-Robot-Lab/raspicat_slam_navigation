@@ -25,7 +25,7 @@ def generate_launch_description():
     use_sim_time = 'False'
     use_rviz = 'true'
     use_wall_tracking = 'false'
-    use_gnss = 'true'
+    use_gnss = 'false'
 
     launch = IncludeLaunchDescription(
             PythonLaunchDescriptionSource(template_launch_path), 
