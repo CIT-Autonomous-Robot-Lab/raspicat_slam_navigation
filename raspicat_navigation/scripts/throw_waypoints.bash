@@ -3,7 +3,8 @@
 # sudo wget https://github.com/mikefarah/yq/releases/download/v4.40.1/yq_linux_amd64 -O /usr/local/bin/yq
 # sudo chmod +x /usr/local/bin/yq
 
-yaml_file="$HOME/src/raspicat_slam_navigation/raspicat_navigation/config/waypoint/" # 追加分のwaypointのyamlのパス
+# yaml_file="$HOME/src/raspicat_slam_navigation/raspicat_navigation/config/waypoint/" # 追加分のwaypointのyamlのパス
+yaml_file="$HOME/waypoint/wp_kakuninn.yaml" 
 
 # Read YAML file and extract waypoints using yq tool (assuming it's installed)
 waypoints=($(yq eval '.waypoints | keys | .[]' "$yaml_file"))

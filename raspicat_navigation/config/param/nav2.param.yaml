@@ -57,7 +57,7 @@ emcl2:
     odom_fw_dev_per_rot: 0.2
     odom_rot_dev_per_fw: 0.13
     odom_rot_dev_per_rot: 0.05
-    laser_likelihood_max_dist: 0.75
+    laser_likelihood_max_dist: 0.4
     use_gnss_reset: false
     use_wall_tracking: false
     gnss_reset_var: 0.5
@@ -146,7 +146,7 @@ controller_server:
       debug_trajectory_details: True
       min_vel_x: 0.0
       min_vel_y: 0.0
-      max_vel_x: 1.0
+      max_vel_x: 0.5
       max_vel_y: 0.0
       max_vel_theta: 0.5
       min_speed_xy: 0.0
