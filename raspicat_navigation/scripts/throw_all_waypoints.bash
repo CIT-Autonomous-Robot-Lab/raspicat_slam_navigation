@@ -26,7 +26,8 @@ for yaml_file in "${yaml_files[@]}"; do
     echo "Processing waypoints from: $yaml_file"
     # Read YAML file and extract waypoints using yq tool (assuming it's installed)
     waypoints=($(yq eval '.waypoints | keys | .[]' "$yaml_file"))
-
+    goal_message="{
+    poses: ["
     # Waypointsを処理
     for waypoint in "${waypoints[@]}"; do
         pose_x=$(yq eval ".waypoints.$waypoint.pose[0]" "$yaml_file")
@@ -39,26 +40,32 @@ for yaml_file in "${yaml_files[@]}"; do
 
         # Send goal using ros2 action
         #<< COMMENTOUT
-        ros2 action send_goal /navigate_to_pose nav2_msgs/action/NavigateToPose "
-        pose:
-          header: 
-            stamp: 
-              sec: 0
-            frame_id: 'map'
-          pose:
-            position: { x: $pose_x, y: $pose_y, z: $pose_z}
-            orientation: { x: $orientation_x, y: $orientation_y, w: $orientation_w, z: $orientation_z}" &
+	tmp_goal_message="{header: {frame_id: 'map'}, pose: {position: { x: $pose_x, y: $pose_y, z: $pose_z}, orientation: { x: $orientation_x, y: $orientation_y, w: $orientation_w, z: $orientation_z}}}, "
+	goal_message=$goal_message$tmp_goal_message
+	#echo $goal_message
+        #ros2 action send_goal /navigate_to_pose nav2_msgs/action/NavigateToPose "
+        #pose:
+        #  header: 
+        #    stamp: 
+        #      sec: 0
+        #    frame_id: 'map'
+        #  pose:
+        #    position: { x: $pose_x, y: $pose_y, z: $pose_z}
+        #    orientation: { x: $orientation_x, y: $orientation_y, w: $orientation_w, z: $orientation_z}" &
         #COMMENTOUT
 
         # デバッグ用
-        echo "pose x: $pose_x, y: $pose_y, z: $pose_z"
-        echo "orientation  x: $orientation_x, y: $orientation_y, w: $orientation_w, z: $orientation_z"
+        #echo "pose x: $pose_x, y: $pose_y, z: $pose_z"
+        #echo "orientation  x: $orientation_x, y: $orientation_y, w: $orientation_w, z: $orientation_z"
         
         # Enterキーで次のウェイポイントへ進む
         # read -p "Press Enter to proceed to the next waypoint: "
-        wait
     done
-
+    last_message="]
+    }"
+    goal_message=$goal_message$last_message
+    #echo $goal_message
+    ros2 action send_goal /follow_waypoints nav2_msgs/action/FollowWaypoints "$goal_message"
     # YAMLファイル切り替え時のキー入力待ち
     echo "Finished processing $yaml_file."
     read -p "Press Enter to proceed to the next YAML file, or Ctrl+C to exit: "
