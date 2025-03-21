@@ -62,7 +62,7 @@ def generate_launch_description():
     declare_map_yaml = DeclareLaunchArgument(
         'map', default_value=os.path.join(
             get_package_share_directory('raspicat_slam'),
-                'config', 'maps', 'iscas_museum_map.yaml'),
+                'config', 'maps', 'tsudanuma.yaml'),
                 description='Full path to map yaml file to load')
     declare_params_file = DeclareLaunchArgument(
         'params_file',
@@ -137,7 +137,7 @@ def generate_launch_description():
                 respawn=use_respawn,
                 respawn_delay=2.0,
                 parameters=[configured_params],
-                arguments=['--ros-args', '--log-level', log_level],
+                arguments=['--ros-args', '--log-level', 'warn'],
                 remappings=remappings),
             Node(
                 package='nav2_lifecycle_manager',
