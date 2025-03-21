@@ -40,6 +40,32 @@ def generate_launch_description():
     container_name = LaunchConfiguration('container_name')
     use_respawn = LaunchConfiguration('use_respawn')
     log_level = LaunchConfiguration('log_level')
+    map_regions_config_path = LaunchConfiguration('map_regions_config_path')
+
+    # map_scan_managerの設定
+    map_scan_manager_share = get_package_share_directory('map_scan_manager')
+    scan_params_yaml = os.path.join(map_scan_manager_share, 'config', 'scan_params.yaml')
+    default_map_regions_config = os.path.join(map_scan_manager_share, 'config', 'map_regions.yaml')
+
+    declare_map_regions_config = DeclareLaunchArgument(
+        'map_regions_config_path',
+        default_value=default_map_regions_config,
+        description='マップ領域設定ファイルのパス'
+    )
+
+    # map_scan_managerノードの設定
+    map_scan_manager_node = Node(
+        package='map_scan_manager',
+        executable='map_scan_manager_node',
+        name='map_scan_manager',
+        output='screen',
+        parameters=[
+            {
+                'map_regions_config_path': map_regions_config_path,
+            },
+            scan_params_yaml
+        ]
+    )
 
     declare_namespace = DeclareLaunchArgument(
         'namespace',
@@ -327,9 +353,11 @@ def generate_launch_description():
     ld.add_action(declare_use_respawn)
     ld.add_action(declare_log_level)
     ld.add_action(declare_arg_use_rviz)
+    ld.add_action(declare_map_regions_config)
 
     ld.add_action(load_nodes)
     ld.add_action(load_composable_nodes)
+    ld.add_action(map_scan_manager_node)
 
     ld.add_action(rviz2)
 
