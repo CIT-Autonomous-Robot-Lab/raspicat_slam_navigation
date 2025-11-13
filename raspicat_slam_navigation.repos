@@ -1,0 +1,17 @@
+repositories:
+  raspicat/raspicat_ros:
+    type: git
+    url: https://github.com/rt-net/raspicat_ros.git
+    version: ros2
+  raspicat/raspicat_description:
+    type: git
+    url: https://github.com/rt-net/raspicat_description.git
+    version: ros2
+  raspicat/raspicat_slam_navigation:
+    type: git
+    url: https://github.com/rt-net/raspicat_slam_navigation.git
+    version: ros2
+  raspicat/raspimouse2:
+    type: git
+    url: https://github.com/rt-net/raspimouse2
+    version: humble-devel
